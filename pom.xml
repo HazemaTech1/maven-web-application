@@ -95,7 +95,7 @@
 	    <repository>
 	      <id>nexus</id>
 	      <name>Landmark Technologies Releases Nexus Repository</name>
-	      <url>http://54.89.74.128:8081/HazemaTech/repository/paypal-releases/</url>
+	      <url>http://54.89.74.128:8081/HazemaTech/repository/tesla-releases/</url>
 	    </repository>
 	    
 	    <snapshotRepository>
