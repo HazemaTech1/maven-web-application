@@ -1,0 +1,31 @@
+node{ 
+     def mavenHome = tool name: 'maven3.9.1'
+ stage('1.CodeClone'){
+git credentialsId: 'Git', url: 'https://github.com/HazemaTech1/maven-web-application'
+}
+stage('2MavenBuild'){
+   sh "${mavenHome}/bin/mvn package"
+ }
+ stage('3CodeQuality'){
+     sh "${mavenHome}/bin/mvn sonar:sonar"
+ }
+ stage('4UploadArtifacts'){
+     sh "${mavenHome}/bin/mvn deploy"
+ }
+ stage('5deploy2UAT'){
+   deploy adapters: [tomcat9(credentialsId: 'TomcatCredentials', path: '', url: 'http://54.196.56.69:8080')], contextPath: null, war: 'target/*.war'  
+ }
+ stage('6ManualAproval'){
+     sh "echo 'ready for review'"
+     timeout(time:5, unit:'HOURS'){
+         input message: 'Application ready for deployment, please review and approve'
+     }
+ }
+ stage('7Deploy2Prod'){
+    deploy adapters: [tomcat9(credentialsId: 'TomcatCredentials', path: '', url: 'http://54.196.56.69:8080')], contextPath: null, war: 'target/*.war'   
+ }
+ stage('8EmailAlert'){
+   emailext body: '''Hello Team
+Email alert executed''', recipientProviders: [buildUser(), upstreamDevelopers(), developers()], subject: 'Email Alerts', to: 'sneezyazeez@gmail.com, malickawall@gmail.com, hajarrow@gmail.com,hajiyadijigi@yahoo.com' 
+ }
+}
