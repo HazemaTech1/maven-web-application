@@ -6,6 +6,7 @@ git credentialsId: 'Git', url: 'https://github.com/HazemaTech1/maven-web-applica
 stage('2MavenBuild'){
    sh "${mavenHome}/bin/mvn package"
  }
+ /*
  stage('3CodeQuality'){
      sh "${mavenHome}/bin/mvn sonar:sonar"
  }
@@ -26,6 +27,10 @@ stage('2MavenBuild'){
  }
  stage('8EmailAlert'){
    emailext body: '''Hello Team
+   
+   Build is done.
+   
 Email alert executed''', recipientProviders: [buildUser(), upstreamDevelopers(), developers()], subject: 'Email Alerts', to: 'sneezyazeez@gmail.com, malickawall@gmail.com, hajarrow@gmail.com,hajiyadijigi@yahoo.com' 
  }
+ */
 }
